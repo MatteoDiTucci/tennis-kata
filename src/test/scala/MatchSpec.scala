@@ -6,10 +6,10 @@ class MatchSpec extends WordSpec with MustMatchers {
 
     "a new game is started" should {
 
-      "return 0-0 score" in {
+      "returns 0-0 score" in {
         val aMatch = Match("Player A", "Player B")
 
-        aMatch.currentGameScore() mustBe Score("Player A", 0, "Player B", 0)
+        aMatch.score() mustBe "0-0"
       }
     }
   }
@@ -17,14 +17,29 @@ class MatchSpec extends WordSpec with MustMatchers {
 
   "first player scores 2 points and second player scores 1 point" should {
 
-    "return 2-1 score" in {
+    "returns 30-15 score" in {
       val aMatch = Match("Player A", "Player B")
 
-      aMatch.scoresPoint("Player A")
-      aMatch.scoresPoint("Player A")
-      aMatch.scoresPoint("Player B")
+      aMatch.pointWonBy("Player A")
+      aMatch.pointWonBy("Player A")
+      aMatch.pointWonBy("Player B")
 
-      aMatch.currentGameScore() mustBe Score("Player A", 2, "Player B", 1)
+      aMatch.score() mustBe "30-15"
+    }
+  }
+
+  "first player scores 2 points and second player scores 3 point" should {
+
+    "returns 30-40 score" in {
+      val aMatch = Match("Player A", "Player B")
+
+      aMatch.pointWonBy("Player A")
+      aMatch.pointWonBy("Player A")
+      aMatch.pointWonBy("Player B")
+      aMatch.pointWonBy("Player B")
+      aMatch.pointWonBy("Player B")
+
+      aMatch.score() mustBe "30-40"
     }
   }
 }
