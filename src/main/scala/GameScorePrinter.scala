@@ -1,7 +1,10 @@
 case class GameScorePrinter() {
   private val tennisGamePoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
 
-  def print(score: Score, players: Players): String = {
+  def printCurrentGameScore(score: Option[Score], players: Players): String =
+    score.fold("")(printCurrentGameScore(_, players))
+
+  private def printCurrentGameScore(score: Score, players: Players): String = {
     if (score.moreThanThreePointsPerPlayer() && score.playerPointsAreEven) {
       return ", Deuce"
     }
@@ -21,4 +24,8 @@ case class GameScorePrinter() {
 
   private def tennisPoints(points: Int): String =
     tennisGamePoints.get(points).fold("")(e => e)
+
+  def printGamesScore(score: Score): String =
+    s"${score.player1Points}-${score.player2Points}"
 }
+

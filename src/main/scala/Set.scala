@@ -32,7 +32,7 @@ case class Set(private val player1: String, private val player2: String) {
     Some(games.last.score())
   }
 
-  def score: Score = {
+  def gamesScore: Score = {
     val player1WonSets = games.count(game => game.wonBy().fold(false)(_ == player1))
     val player2WonSets = games.count(game => game.wonBy().fold(false)(_ == player2))
     Score(player1WonSets, player2WonSets)
