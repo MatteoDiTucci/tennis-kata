@@ -1,72 +1,47 @@
-import scala.collection.mutable
-
 class Game(players: Players) {
 
-  private val playersPoints = mutable.Map(players._1 -> 0, players._2 -> 0)
+  var currentScore = Score(0, 0)
 
-  def pointWonBy(player: String): Unit =
-    playersPoints.get(player).map(addOnePoint(player, _))
+  def pointWonBy(player: String): Unit = {
+    if (player == players._1) {
+      currentScore = Score(currentScore.player1Points + 1, currentScore.player2Points)
+      return
+    }
+    currentScore = Score(currentScore.player1Points, currentScore.player2Points + 1)
+  }
+
 
   def score(): Score =
-    Score(pointsFor(players._1), pointsFor(players._2))
+    currentScore
 
   def wonBy(): Option[String] = {
-    if (moreThanThreePointsPerPlayer && playersPointsAreEven) {
+    if (isDeuce) {
       return None
     }
 
-    if (moreThanThreePointsPerPlayer && onePlayerLeadsByOnePoint) {
+    if (isAdvantage) {
       return None
     }
 
-    if (hasWon(players._1)) {
+    if (currentScore.player1Points == 4) {
       return Some(players._1)
     }
-    if (hasWon(players._2)) {
+    if (currentScore.player2Points == 4) {
       return Some(players._2)
     }
     None
   }
 
   def isDeuce: Boolean =
-    moreThanThreePointsPerPlayer && playersPointsAreEven
+    currentScore.moreThanThreePointsPerPlayer && currentScore.playersPointsAreEven
 
   def isAdvantage: Boolean =
-    moreThanThreePointsPerPlayer && onePlayerLeadsByOnePoint
+    currentScore.moreThanThreePointsPerPlayer && currentScore.onePlayerLeadsByOnePoint
 
   def leadingPlayer(): String = {
-    if (pointsOf(players._1) == pointsOf(players._2)) {
+    if (currentScore.player1Points == currentScore.player2Points) {
       return players._1
     }
     players._2
   }
-
-  private def addOnePoint(player: String, points: Int) =
-    playersPoints += (player -> (points + 1))
-
-  private def pointsFor(player: String): Int =
-    playersPoints.getOrElse(player, 0)
-
-  private def hasWon(player: String): Boolean =
-    playersPoints.get(player).fold(false)(_ == 4)
-
-
-  private def moreThanThreePointsPerPlayer: Boolean = {
-    pointsOf(players._1) >= 3 && pointsOf(players._2) >= 3
-  }
-
-  private def playersPointsAreEven: Boolean = {
-    pointsOf(players._1) == pointsOf(players._2)
-  }
-
-  private def onePlayerLeadsByOnePoint: Boolean = {
-    if (Math.abs(pointsOf(players._1) - pointsOf(players._2)) == 1) {
-      return true
-    }
-    false
-  }
-
-  private def pointsOf(player: String): Int =
-    playersPoints.get(player).fold(0)(points => points)
-
 }

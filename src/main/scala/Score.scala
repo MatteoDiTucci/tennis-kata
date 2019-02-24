@@ -1,9 +1,10 @@
 case class Score(player1Points: Int, player2Points: Int) {
+
   def moreThanThreePointsPerPlayer(): Boolean = {
     player1Points >= 3 && player2Points >= 3
   }
 
-  def playerPointsAreEven: Boolean = {
+  def playersPointsAreEven: Boolean = {
     player1Points == player2Points
   }
 
