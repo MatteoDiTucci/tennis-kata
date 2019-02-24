@@ -1,3 +1,5 @@
+package domain
+
 case class Match(private val players: Players, private val printer: Printer) {
 
   private val set = Set(players)
@@ -16,4 +18,3 @@ case class Match(private val players: Players, private val printer: Printer) {
   }
 
 }
-

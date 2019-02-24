@@ -1,3 +1,7 @@
+package domain
+
+import domain.games.{Game, NormalGame, TieBreak}
+
 import scala.collection.mutable.ListBuffer
 
 case class Set(private val players: Players) {
@@ -30,8 +34,13 @@ case class Set(private val players: Players) {
     games.count(game => game.wonBy().fold(false)(_ == players._2))
 
 
-  private def createNewGame(player: String) = {
-    games += new Game(players)
+  private def createNewGame(player: String): Unit = {
+    if (player1WonGames == 6 && player2WonGames == 6) {
+      games += new TieBreak(players)
+      return
+    }
+
+    games += new NormalGame(players)
   }
 
   private def addPointInCurrentGame(player: String): Unit = {
