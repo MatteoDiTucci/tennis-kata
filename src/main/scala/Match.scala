@@ -1,6 +1,6 @@
-case class Match(private val player1: String, private val player2: String, private val gamePrinter: GameScorePrinter, setScorePrinter: SetScorePrinter) {
+case class Match(private val players: Players, private val gamePrinter: GameScorePrinter, setScorePrinter: SetScorePrinter) {
 
-  private val set = Set(player1, player2)
+  private val set = Set(players._1, players._2)
 
   def pointWonBy(player: String): Unit =
     set.pointWonBy(player)
@@ -12,7 +12,7 @@ case class Match(private val player1: String, private val player2: String, priva
     setScorePrinter.print(set.score)
 
   private def currentGameScore: String = {
-    set.currentGameScore.fold("")(score => gamePrinter.print(score, player1, player2))
+    set.currentGameScore.fold("")(score => gamePrinter.print(score, players))
   }
 
 }
