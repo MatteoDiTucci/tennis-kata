@@ -1,18 +1,20 @@
-class Game(players: Players) {
+class Game(private val players: Players) {
 
-  var currentScore = Score(0, 0)
+  private var currentScore = Score(0, 0)
 
   def pointWonBy(player: String): Unit = {
     if (player == players._1) {
-      currentScore = Score(currentScore.player1Points + 1, currentScore.player2Points)
+      currentScore = currentScore.addOnePointToPlayer1
       return
     }
-    currentScore = Score(currentScore.player1Points, currentScore.player2Points + 1)
+    currentScore = currentScore.addOnePointToPlayer2
   }
 
+  def player1Points(): Int =
+    currentScore.player1Points
 
-  def score(): Score =
-    currentScore
+  def player2Points(): Int =
+    currentScore.player2Points
 
   def wonBy(): Option[String] = {
     if (isDeuce) {
@@ -23,10 +25,10 @@ class Game(players: Players) {
       return None
     }
 
-    if (currentScore.player1Points == 4) {
+    if (currentScore.hasPlayer1FourPoints) {
       return Some(players._1)
     }
-    if (currentScore.player2Points == 4) {
+    if (currentScore.hasPlayer2FourPoints) {
       return Some(players._2)
     }
     None
@@ -39,7 +41,7 @@ class Game(players: Players) {
     currentScore.moreThanThreePointsPerPlayer && currentScore.onePlayerLeadsByOnePoint
 
   def leadingPlayer(): String = {
-    if (currentScore.player1Points == currentScore.player2Points) {
+    if (currentScore.isPlayer1Leading) {
       return players._1
     }
     players._2

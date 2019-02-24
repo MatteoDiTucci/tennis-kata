@@ -1,4 +1,4 @@
-case class Match(private val players: Players, private val gamePrinter: GameScorePrinter) {
+case class Match(private val players: Players, private val printer: Printer) {
 
   private val set = Set(players)
 
@@ -9,10 +9,10 @@ case class Match(private val players: Players, private val gamePrinter: GameScor
     s"$printGamesScore$printCurrentGameScore"
 
   private def printGamesScore: String =
-    gamePrinter.printGamesScore(set.gamesScore)
+    printer.printGamesScore(set)
 
   private def printCurrentGameScore: String = {
-    gamePrinter.printCurrentGameScore(set.currentGame(), players)
+    printer.printCurrentGameScore(set.currentGame(), players)
   }
 
 }

@@ -1,6 +1,6 @@
 import scala.collection.mutable.ListBuffer
 
-case class Set(players: Players) {
+case class Set(private val players: Players) {
 
   private val games: ListBuffer[Game] = ListBuffer()
 
@@ -10,15 +10,6 @@ case class Set(players: Players) {
     }
     addPointInCurrentGame(player)
   }
-
-  private def createNewGame(player: String) = {
-    games += new Game(players)
-  }
-
-  private def addPointInCurrentGame(player: String): Unit = {
-    games.last.pointWonBy(player)
-  }
-
 
   def currentGame(): Option[Game] = {
     if (games.isEmpty) {
@@ -32,10 +23,19 @@ case class Set(players: Players) {
     Some(games.last)
   }
 
-  def gamesScore: Score = {
-    val player1WonSets = games.count(game => game.wonBy().fold(false)(_ == players._1))
-    val player2WonSets = games.count(game => game.wonBy().fold(false)(_ == players._2))
-    Score(player1WonSets, player2WonSets)
+  def player1WonGames: Int =
+    games.count(game => game.wonBy().fold(false)(_ == players._1))
+
+  def player2WonGames: Int =
+    games.count(game => game.wonBy().fold(false)(_ == players._2))
+
+
+  private def createNewGame(player: String) = {
+    games += new Game(players)
+  }
+
+  private def addPointInCurrentGame(player: String): Unit = {
+    games.last.pointWonBy(player)
   }
 
   private def hasCurrentGameEnded: Boolean =
