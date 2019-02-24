@@ -1,14 +1,14 @@
 import scala.collection.mutable
 
-class Game(private val player1: String, private val player2: String) {
+class Game(players: Players) {
 
-  private val playersPoints = mutable.Map(player1 -> 0, player2 -> 0)
+  private val playersPoints = mutable.Map(players._1 -> 0, players._2 -> 0)
 
   def pointWonBy(player: String): Unit =
     playersPoints.get(player).map(addOnePoint(player, _))
 
   def score(): Score =
-    Score(pointsFor(player1), pointsFor(player2))
+    Score(pointsFor(players._1), pointsFor(players._2))
 
   def wonBy(): Option[String] = {
     if (moreThanThreePointsPerPlayer && playersPointsAreEven) {
@@ -19,13 +19,26 @@ class Game(private val player1: String, private val player2: String) {
       return None
     }
 
-    if (hasWon(player1)) {
-      return Some(player1)
+    if (hasWon(players._1)) {
+      return Some(players._1)
     }
-    if (hasWon(player2)) {
-      return Some(player2)
+    if (hasWon(players._2)) {
+      return Some(players._2)
     }
     None
+  }
+
+  def isDeuce: Boolean =
+    moreThanThreePointsPerPlayer && playersPointsAreEven
+
+  def isAdvantage: Boolean =
+    moreThanThreePointsPerPlayer && onePlayerLeadsByOnePoint
+
+  def leadingPlayer(): String = {
+    if (pointsOf(players._1) == pointsOf(players._2)) {
+      return players._1
+    }
+    players._2
   }
 
   private def addOnePoint(player: String, points: Int) =
@@ -39,15 +52,15 @@ class Game(private val player1: String, private val player2: String) {
 
 
   private def moreThanThreePointsPerPlayer: Boolean = {
-    pointsOf(player1) >= 3 && pointsOf(player2) >= 3
+    pointsOf(players._1) >= 3 && pointsOf(players._2) >= 3
   }
 
   private def playersPointsAreEven: Boolean = {
-    pointsOf(player1) == pointsOf(player2)
+    pointsOf(players._1) == pointsOf(players._2)
   }
 
   private def onePlayerLeadsByOnePoint: Boolean = {
-    if (Math.abs(pointsOf(player1) - pointsOf(player2)) == 1) {
+    if (Math.abs(pointsOf(players._1) - pointsOf(players._2)) == 1) {
       return true
     }
     false

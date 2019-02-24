@@ -1,25 +1,18 @@
 case class GameScorePrinter() {
   private val tennisGamePoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
 
-  def printCurrentGameScore(score: Option[Score], players: Players): String =
-    score.fold("")(printCurrentGameScore(_, players))
+  def printCurrentGameScore(game: Option[Game], players: Players): String =
+    game.fold("")(printCurrentGameScore(_, players))
 
-  private def printCurrentGameScore(score: Score, players: Players): String = {
-    if (score.moreThanThreePointsPerPlayer() && score.playerPointsAreEven) {
+  private def printCurrentGameScore(game: Game, players: Players): String = {
+    if (game.isDeuce) {
       return ", Deuce"
     }
-    if (score.moreThanThreePointsPerPlayer() && score.onePlayerLeadsByOnePoint()) {
-      return s", Advantage ${leadingPlayer(score, players)}"
+    if (game.isAdvantage) {
+      return s", Advantage ${game.leadingPlayer()}"
     }
 
-    s", ${tennisPoints(score.player1Points)}-${tennisPoints(score.player2Points)}"
-  }
-
-  private def leadingPlayer(score: Score, players: Players): String = {
-    if (score.isPlayer1Winning) {
-      return players._1
-    }
-    players._2
+    s", ${tennisPoints(game.score().player1Points)}-${tennisPoints(game.score().player2Points)}"
   }
 
   private def tennisPoints(points: Int): String =
