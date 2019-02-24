@@ -1,11 +1,18 @@
 case class Match(player1: String, player2: String) {
 
-  private val game = Game(player1, player2)
+  private val set = Set(player1, player2)
 
   def pointWonBy(player: String): Unit =
-    game.pointWonBy(player)
+    set.pointWonBy(player)
 
   def score(): String =
-    game.score().toString
+    s"$setScore$currentGameScore"
+
+  private def setScore: String =
+    set.score.toString
+
+  private def currentGameScore: String =
+    set.currentGameScore.fold("")(score => s", $score")
+
 }
 

@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-case class Game(player1: String, player2: String) {
+class Game(player1: String, player2: String) {
 
   private val playersPoints = mutable.Map(player1 -> 0, player2 -> 0)
 
@@ -8,11 +8,25 @@ case class Game(player1: String, player2: String) {
     playersPoints.get(player).map(addOnePoint(player, _))
 
   def score(): Score =
-    Score(pointsFor(player1), pointsFor(player2))
+    GameScore(pointsFor(player1), pointsFor(player2))
+
+  def wonBy(): Option[String] = {
+    if (wonBy(player1)) {
+      return Some(player1)
+    }
+    if (wonBy(player2)) {
+      return Some(player2)
+    }
+    None
+  }
 
   private def addOnePoint(player: String, points: Int) =
     playersPoints += (player -> (points + 1))
 
   private def pointsFor(player: String): Int =
     playersPoints.getOrElse(player, 0)
+
+  private def wonBy(player: String): Boolean =
+    playersPoints.get(player).fold(false)(_ == 4)
+
 }
