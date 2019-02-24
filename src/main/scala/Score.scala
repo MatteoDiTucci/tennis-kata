@@ -1,17 +1,19 @@
-sealed abstract class Score(player1Points: Int, player2Points: Int)
+case class Score(player1Points: Int, player2Points: Int) {
+  def moreThanThreePointsPerPlayer(): Boolean = {
+    player1Points >= 3 && player2Points >= 3
+  }
 
-case class GameScore(player1Points: Int, player2Points: Int) extends Score(player1Points, player1Points){
+  def playerPointsAreEven: Boolean = {
+    player1Points == player2Points
+  }
 
-  private val tennisGamePoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
+  def onePlayerLeadsByOnePoint(): Boolean = {
+    if (Math.abs(player1Points - player2Points) == 1) {
+      return true
+    }
+    false
+  }
 
-  override def toString: String =
-    s"${tennisPoints(player1Points)}-${tennisPoints(player2Points)}"
-
-  private def tennisPoints(points: Int): String =
-    tennisGamePoints.get(points).fold("")(e => e)
-}
-
-case class SetScore(player1Points: Int, player2Points: Int) extends Score(player1Points, player1Points){
-  override def toString: String =
-    s"$player1Points-$player2Points"
+  def isPlayer1Winning: Boolean =
+    player1Points >= player2Points
 }
