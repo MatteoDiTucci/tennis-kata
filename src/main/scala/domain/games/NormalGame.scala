@@ -12,28 +12,28 @@ class NormalGame(private val players: Players) extends Game(players) {
       return None
     }
 
-    if (currentScore.player1Points == 4) {
+    if (currentScore.hasPlayer1Points(4)) {
       return Some(players._1)
     }
-    if (currentScore.player2Points == 4) {
+    if (currentScore.hasPlayer2Points(4)) {
       return Some(players._2)
     }
     None
   }
 
-  def isDeuce: Boolean =
-    hasBothPlayersAtLeastPoints(3) && currentScore.player1Points == currentScore.player2Points
-
-  def isAdvantage: Boolean =
-    hasBothPlayersAtLeastPoints(3) && Math.abs(currentScore.player1Points - currentScore.player2Points) == 1
-
   def leadingPlayer(): String = {
-    if (currentScore.player1Points >= currentScore.player2Points) {
+    if (currentScore.isPlayer1Leading) {
       return players._1
     }
     players._2
   }
 
-  private def hasBothPlayersAtLeastPoints(points: Int) =
-    currentScore.player1Points >= points && currentScore.player2Points >= points
+  def isDeuce: Boolean =
+    haveBothPlayersAtLeastPoints(3) && currentScore.isTie
+
+  def isAdvantage: Boolean =
+    haveBothPlayersAtLeastPoints(3) && currentScore.isPointsDifference(1)
+
+  private def haveBothPlayersAtLeastPoints(points: Int) =
+    currentScore.hasPlayer1AtLeastPoints(points) && currentScore.hasPlayer2AtLeastPoints(points)
 }

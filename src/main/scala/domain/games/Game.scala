@@ -9,10 +9,10 @@ abstract class Game(private val players: Players) {
 
   def pointWonBy(player: String): Unit = {
     if (player == players._1) {
-      currentScore = Score(currentScore.player1Points + 1, currentScore.player2Points)
+      currentScore = currentScore.addOnePointToPlayer1()
       return
     }
-    currentScore = Score(currentScore.player1Points, currentScore.player2Points + 1)
+    currentScore = currentScore.addOnePointToPlayer2()
   }
 
   def player1Points(): Int =
