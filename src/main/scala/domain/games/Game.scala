@@ -21,4 +21,11 @@ abstract class Game(private val players: Players) {
     }
     score.pointsFor(players._2)
   }
+
+  def leadingPlayer(): String = {
+    if (score.isLeading(players._1)) {
+      return players._1
+    }
+    players._2
+  }
 }

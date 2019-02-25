@@ -21,13 +21,6 @@ class NormalGame(private val players: Players) extends Game(players) {
     None
   }
 
-  def leadingPlayer(): String = {
-    if (score.isLeading(players._1)) {
-      return players._1
-    }
-    players._2
-  }
-
   def isDeuce: Boolean =
     haveBothPlayersAtLeastPoints(3) && score.isTie
 

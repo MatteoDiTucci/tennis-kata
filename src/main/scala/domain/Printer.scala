@@ -6,14 +6,14 @@ case class Printer() {
   private val tennisPoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
 
   def printMatchScore(set: Set, players: Players): String = {
-    gamesScore(set, players) + currentGameScore(set, players)
+    printGamesScore(set, players) + printCurrentGameScore(set, players)
   }
 
-  private def gamesScore(set: Set, players: Players) = {
+  private def printGamesScore(set: Set, players: Players) = {
     s"${set.gamesWonByPlayer(players._1)}-${set.gamesWonByPlayer(players._2)}"
   }
 
-  private def currentGameScore(set: Set, players: Players) = {
+  private def printCurrentGameScore(set: Set, players: Players) = {
     set.currentGame().fold("") {
       case normalGame: NormalGame => printNormalGame(normalGame, players)
       case tieBreak: TieBreak => printTieBreak(tieBreak, players)
