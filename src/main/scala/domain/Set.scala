@@ -27,15 +27,15 @@ case class Set(private val players: Players) {
     Some(games.last)
   }
 
-  def player1WonGames: Int =
-    games.count(game => game.wonBy().fold(false)(_ == players._1))
-
-  def player2WonGames: Int =
+  def gamesWonByPlayer(player: String): Int = {
+    if (player == players._1) {
+      return games.count(game => game.wonBy().fold(false)(_ == players._1))
+    }
     games.count(game => game.wonBy().fold(false)(_ == players._2))
-
+  }
 
   private def createNewGame(player: String): Unit = {
-    if (player1WonGames == 6 && player2WonGames == 6) {
+    if (gamesWonByPlayer(players._1) == 6 && gamesWonByPlayer(players._2) == 6) {
       games += new TieBreak(players)
       return
     }

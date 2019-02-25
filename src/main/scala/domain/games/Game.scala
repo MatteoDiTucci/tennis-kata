@@ -3,21 +3,22 @@ package domain.games
 import domain.{Players, Score}
 
 abstract class Game(private val players: Players) {
-  protected var currentScore = Score(0, 0)
+  protected var score = Score(players, 0, 0)
 
   def wonBy(): Option[String]
 
   def pointWonBy(player: String): Unit = {
     if (player == players._1) {
-      currentScore = currentScore.addOnePointToPlayer1()
+      score = score.addOnePointToPlayer(players._1)
       return
     }
-    currentScore = currentScore.addOnePointToPlayer2()
+    score = score.addOnePointToPlayer(players._2)
   }
 
-  def player1Points(): Int =
-    currentScore.player1Points
-
-  def player2Points(): Int =
-    currentScore.player2Points
+  def pointsForPlayer(player: String): Int = {
+    if (player == players._1) {
+      return score.pointsFor(players._1)
+    }
+    score.pointsFor(players._2)
+  }
 }
