@@ -12,10 +12,10 @@ class NormalGame(private val players: Players) extends Game(players) {
       return None
     }
 
-    if (score.hasPlayerPoints(players._1, 4)) {
+    if (score.hasPlayerAtLeastPoints(players._1, 4)) {
       return Some(players._1)
     }
-    if (score.hasPlayerPoints(players._2, 4)) {
+    if (score.hasPlayerAtLeastPoints(players._2, 4)) {
       return Some(players._2)
     }
     None
