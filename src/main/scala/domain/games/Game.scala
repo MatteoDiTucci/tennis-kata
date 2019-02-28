@@ -1,31 +1,21 @@
 package domain.games
 
-import domain.{Players, Score}
+import domain.{Player, Score}
 
-abstract class Game(private val players: Players) {
-  protected var score = Score(players, 0, 0)
+abstract class Game(private val player1: Player, private val player2: Player) {
+  protected var score = Score(player1, player2, 0, 0)
 
-  def wonBy(): Option[String]
+  def wonBy(): Option[Player]
 
-  def pointWonBy(player: String): Unit = {
-    if (player == players._1) {
-      score = score.addOnePointToPlayer(players._1)
-      return
-    }
-    score = score.addOnePointToPlayer(players._2)
+  def pointWonBy(player: Player): Unit = {
+    score = player.addOnePointTo(score)
   }
 
-  def pointsForPlayer(player: String): Int = {
-    if (player == players._1) {
-      return score.pointsFor(players._1)
-    }
-    score.pointsFor(players._2)
+  def pointsForPlayer(player: Player): Int = {
+    score.pointsFor(player)
   }
 
-  def leadingPlayer(): String = {
-    if (score.isLeading(players._1)) {
-      return players._1
-    }
-    players._2
-  }
+  def leadingPlayerName(): String =
+    score.leader().name
+
 }

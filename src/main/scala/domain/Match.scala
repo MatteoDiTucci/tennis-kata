@@ -1,13 +1,13 @@
 package domain
 
-case class Match(private val players: Players, private val printer: Printer) {
+case class Match(private val player1: String, private val player2: String, private val printer: Printer) {
 
-  private val set = Set(players)
+  private val set = Set(Player(player1), Player(player2))
 
-  def pointWonBy(player: String): Unit =
-    set.pointWonBy(player)
+  def pointWonBy(name: String): Unit =
+    set.pointWonBy(Player(name))
 
   def score(): String =
-    printer.printMatchScore(set, players)
+    printer.printMatchScore(set, Player(player1), Player(player2))
 
 }

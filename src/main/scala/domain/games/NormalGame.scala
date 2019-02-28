@@ -1,9 +1,9 @@
 package domain.games
 
-import domain.Players
+import domain.Player
 
-class NormalGame(private val players: Players) extends Game(players) {
-  def wonBy(): Option[String] = {
+class NormalGame(private val player1: Player, private val player2: Player) extends Game(player1, player2) {
+  def wonBy(): Option[Player] = {
     if (isDeuce) {
       return None
     }
@@ -12,12 +12,14 @@ class NormalGame(private val players: Players) extends Game(players) {
       return None
     }
 
-    if (score.hasPlayerAtLeastPoints(players._1, 4)) {
-      return Some(players._1)
+    if (player1.hasAtLeastPoints(score, 4)) {
+      return Some(player1)
     }
-    if (score.hasPlayerAtLeastPoints(players._2, 4)) {
-      return Some(players._2)
+
+    if (player2.hasAtLeastPoints(score, 4)) {
+      return Some(player2)
     }
+
     None
   }
 
@@ -28,5 +30,5 @@ class NormalGame(private val players: Players) extends Game(players) {
     haveBothPlayersAtLeastPoints(3) && score.isPointsDifference(1)
 
   private def haveBothPlayersAtLeastPoints(points: Int) =
-    score.hasPlayerAtLeastPoints(players._1, points) && score.hasPlayerAtLeastPoints(players._2, points)
+    player1.hasAtLeastPoints(score, points) && player2.hasAtLeastPoints(score, points)
 }

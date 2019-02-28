@@ -1,26 +1,26 @@
 package domain
 
-case class Score(private val players: Players, private val player1Points: Int, private val player2Points: Int) {
+case class Score(private val player1: Player, private val player2: Player, private val player1Points: Int, private val player2Points: Int) {
 
-  def addOnePointToPlayer(player: String): Score = {
-    if (player == players._1) {
-      return Score(this.players, this.player1Points + 1, player2Points)
+  def addOnePointToPlayer(player: Player): Score = {
+    if (player == player1) {
+      return Score(player1, player2, player1Points + 1, player2Points)
     }
-    Score(this.players, this.player1Points, player2Points + 1)
+    Score(player1, player2, player1Points, player2Points + 1)
   }
 
-  def hasPlayerAtLeastPoints(player: String, points: Int): Boolean = {
-    if (player == players._1) {
+  def hasPlayerAtLeastPoints(player: Player, points: Int): Boolean = {
+    if (player == player1) {
       return player1Points >= points
     }
     player2Points >= points
   }
 
-  def isLeading(player: String): Boolean = {
-    if (player == players._1) {
-      return player1Points >= player2Points
+  def leader(): Player = {
+    if (player1Points >= player2Points) {
+      return player1
     }
-    player2Points >= player1Points
+    player2
   }
 
   def isTie: Boolean =
@@ -29,8 +29,8 @@ case class Score(private val players: Players, private val player1Points: Int, p
   def isPointsDifference(difference: Int): Boolean =
     Math.abs(player1Points - player2Points) == 1
 
-  def pointsFor(player: String): Int = {
-    if (player == players._1) {
+  def pointsFor(player: Player): Int = {
+    if (player == player1) {
       return player1Points
     }
     player2Points

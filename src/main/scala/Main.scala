@@ -1,4 +1,4 @@
-import domain.{Match, Players, Printer}
+import domain.{Match, Printer}
 
 object Main {
 
@@ -6,9 +6,8 @@ object Main {
     val printer = Printer()
     val player1 = "player 1"
     val player2 = "player 2"
-    val players = Players(player1, player2)
 
-    val aMatch = Match(players, printer)
+    val aMatch = Match(player1, player2, printer)
     aMatch.pointWonBy(player1)
     aMatch.pointWonBy(player2)
     // this will return "0-0, 15-15"
