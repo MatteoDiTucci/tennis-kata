@@ -1,6 +1,10 @@
 package domain
 
-case class Score(private val player1: Player, private val player2: Player, private val player1Points: Int, private val player2Points: Int) {
+case class Score(
+                  private val player1: Player,
+                  private val player2: Player,
+                  private val player1Points: Int,
+                  private val player2Points: Int) {
 
   def addOnePointToPlayer(player: Player): Score = {
     if (player == player1) {

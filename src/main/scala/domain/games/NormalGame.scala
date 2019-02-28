@@ -3,6 +3,7 @@ package domain.games
 import domain.Player
 
 class NormalGame(private val player1: Player, private val player2: Player) extends Game(player1, player2) {
+
   def wonBy(): Option[Player] = {
     if (isDeuce) {
       return None
