@@ -1,9 +1,9 @@
-import domain.{Match, Printer}
+import domain.{Match, Formatter}
 import org.scalatest.{MustMatchers, WordSpec}
 
 class MatchSpec extends WordSpec with MustMatchers {
 
-  private val printer = Printer()
+  private val formatter = Formatter()
   private val player1 = "Player A"
   private val player2 = "Player B"
 
@@ -12,7 +12,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "a new match is started" should {
 
       "return 0-0" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.score() mustBe "0-0"
       }
@@ -21,7 +21,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 1 point" should {
 
       "return 0-0, 15-0" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
 
@@ -32,7 +32,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 2 points and Player2 scores 1 point" should {
 
       "return 0-0, 30-15" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player1)
@@ -45,7 +45,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 2 points and Player2 scores 3 point" should {
 
       "return 0-0, 30-40" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player1)
@@ -60,7 +60,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 4 points and Player2 scores 0 point" should {
 
       "return 1-0" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player1)
@@ -74,7 +74,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 3 points and Player2 scores 3 points" should {
 
       "return 0-0, Deuce" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player2)
@@ -90,7 +90,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 wins after a Deuce" should {
 
       "return 0-0, Deuce" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player2)
@@ -108,7 +108,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player1 scores 4 points and Player2 scores 3 points" should {
 
       "return 0-0, Advantage Player 2" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player2)
@@ -125,7 +125,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     "Player2 wins after an Advantage" should {
 
       "return 0-0, Deuce" in {
-        val aMatch = Match(player1, player2, printer)
+        val aMatch = Match(player1, player2, formatter)
 
         aMatch.pointWonBy(player1)
         aMatch.pointWonBy(player2)
@@ -141,7 +141,7 @@ class MatchSpec extends WordSpec with MustMatchers {
     }
 
     "Player1 has won 6 games and Player2 has won 6 games" when {
-      val aMatch = Match(player1, player2, printer)
+      val aMatch = Match(player1, player2, formatter)
       playerWinsNGames(aMatch, player1, 6)
       playerWinsNGames(aMatch, player2, 6)
 
@@ -161,7 +161,7 @@ class MatchSpec extends WordSpec with MustMatchers {
       "Player1 scores 1 point and the Player2 scores 1 point" should {
 
         "return 1-0, 15-15" in {
-          val aMatch = Match(player1, player2, printer)
+          val aMatch = Match(player1, player2, formatter)
 
           aMatch.pointWonBy(player1)
           aMatch.pointWonBy(player1)

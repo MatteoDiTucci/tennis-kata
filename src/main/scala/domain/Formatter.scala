@@ -2,7 +2,7 @@ package domain
 
 import domain.games.{NormalGame, TieBreak}
 
-case class Printer() {
+case class Formatter() {
   private val tennisPoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
 
   def printMatchScore(set: Set, player1: Player, player2: Player): String = {

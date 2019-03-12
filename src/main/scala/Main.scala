@@ -1,13 +1,13 @@
-import domain.{Match, Printer}
+import domain.{Match, Formatter}
 
 object Main {
 
   def main(args: Array[String]): Unit = {
-    val printer = Printer()
+    val formatter = Formatter()
     val player1 = "player 1"
     val player2 = "player 2"
 
-    val aMatch = Match(player1, player2, printer)
+    val aMatch = Match(player1, player2, formatter)
     aMatch.pointWonBy(player1)
     aMatch.pointWonBy(player2)
     // this will return "0-0, 15-15"
