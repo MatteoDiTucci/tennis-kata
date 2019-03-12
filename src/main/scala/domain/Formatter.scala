@@ -5,22 +5,22 @@ import domain.games.{NormalGame, TieBreak}
 case class Formatter() {
   private val tennisPoints = Map(0 -> "0", 1 -> "15", 2 -> "30", 3 -> "40")
 
-  def printMatchScore(set: Set, player1: Player, player2: Player): String = {
-    printGamesScore(set, player1, player2) + printCurrentGameScore(set, player1, player2)
+  def formatMatchScore(set: Set, player1: Player, player2: Player): String = {
+    gameScore(set, player1, player2) + currentGameScore(set, player1, player2)
   }
 
-  private def printGamesScore(set: Set, player1: Player, player2: Player) = {
+  private def gameScore(set: Set, player1: Player, player2: Player) = {
     s"${set.gamesWonByPlayer(player1)}-${set.gamesWonByPlayer(player2)}"
   }
 
-  private def printCurrentGameScore(set: Set, player1: Player, player2: Player) = {
+  private def currentGameScore(set: Set, player1: Player, player2: Player) = {
     set.currentGame().fold("") {
-      case normalGame: NormalGame => printNormalGame(normalGame, player1, player2)
-      case tieBreak: TieBreak => printTieBreak(tieBreak, player1, player2)
+      case normal: NormalGame => normalGame(normal, player1, player2)
+      case tieBreak: TieBreak => tieBreakGame(tieBreak, player1, player2)
     }
   }
 
-  private def printNormalGame(normalGame: NormalGame, player1: Player, player2: Player): String = {
+  private def normalGame(normalGame: NormalGame, player1: Player, player2: Player): String = {
     if (normalGame.isDeuce) {
       return ", Deuce"
     }
@@ -35,6 +35,6 @@ case class Formatter() {
   private def toTennisPoints(points: Int): String =
     tennisPoints.get(points).fold("")(Predef.identity)
 
-  private def printTieBreak(game: TieBreak, player1: Player, player2: Player): String =
+  private def tieBreakGame(game: TieBreak, player1: Player, player2: Player): String =
     s", ${game.pointsForPlayer(player1)}-${game.pointsForPlayer(player2)}"
 }

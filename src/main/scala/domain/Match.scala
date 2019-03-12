@@ -8,6 +8,6 @@ case class Match(private val player1: String, private val player2: String, priva
     set.pointWonBy(Player(name))
 
   def score(): String =
-    formatter.printMatchScore(set, Player(player1), Player(player2))
+    formatter.formatMatchScore(set, Player(player1), Player(player2))
 
 }
