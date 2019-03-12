@@ -24,16 +24,16 @@ case class Formatter() {
     }
   }
 
-  private def normalGame(normalGame: NormalGame, player1: Player, player2: Player): String = {
-    if (normalGame.isDeuce) {
+  private def normalGame(game: NormalGame, player1: Player, player2: Player): String = {
+    if (game.isDeuce) {
       return "Deuce"
     }
 
-    if (normalGame.isAdvantage) {
-      return s"Advantage ${normalGame.leadingPlayerName()}"
+    if (game.isAdvantage) {
+      return s"Advantage ${game.leadingPlayerName()}"
     }
 
-    s"${toTennisPoints(normalGame.pointsForPlayer(player1))}-${toTennisPoints(normalGame.pointsForPlayer(player2))}"
+    s"${toTennisPoints(game.pointsForPlayer(player1))}-${toTennisPoints(game.pointsForPlayer(player2))}"
   }
 
   private def toTennisPoints(points: Int): String =
