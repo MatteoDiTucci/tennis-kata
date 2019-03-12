@@ -8,7 +8,7 @@ abstract class Game(private val player1: Player, private val player2: Player) {
   def wonBy(): Option[Player]
 
   def pointWonBy(player: Player): Unit = {
-    score = player.addOnePointTo(score)
+    score = score.addOnePointToPlayer(player)
   }
 
   def pointsForPlayer(player: Player): Int = {

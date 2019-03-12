@@ -39,5 +39,4 @@ case class Score(
     }
     player2Points
   }
-
 }

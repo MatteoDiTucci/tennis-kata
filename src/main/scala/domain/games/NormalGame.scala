@@ -13,11 +13,11 @@ class NormalGame(private val player1: Player, private val player2: Player) exten
       return None
     }
 
-    if (player1.hasAtLeastPoints(score, 4)) {
+    if (score.hasPlayerAtLeastPoints(player1, 4)) {
       return Some(player1)
     }
 
-    if (player2.hasAtLeastPoints(score, 4)) {
+    if (score.hasPlayerAtLeastPoints(player2, 4)) {
       return Some(player2)
     }
 
@@ -31,5 +31,5 @@ class NormalGame(private val player1: Player, private val player2: Player) exten
     haveBothPlayersAtLeastPoints(3) && score.isPointsDifference(1)
 
   private def haveBothPlayersAtLeastPoints(points: Int) =
-    player1.hasAtLeastPoints(score, points) && player2.hasAtLeastPoints(score, points)
+    score.hasPlayerAtLeastPoints(player1, points) && score.hasPlayerAtLeastPoints(player2, points)
 }
