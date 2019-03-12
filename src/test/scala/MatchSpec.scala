@@ -18,6 +18,17 @@ class MatchSpec extends WordSpec with MustMatchers {
       }
     }
 
+    "Player1 scores 1 point" should {
+
+      "return 0-0, 15-0" in {
+        val aMatch = Match(player1, player2, printer)
+
+        aMatch.pointWonBy(player1)
+
+        aMatch.score() mustBe "0-0, 15-0"
+      }
+    }
+
     "Player1 scores 2 points and Player2 scores 1 point" should {
 
       "return 0-0, 30-15" in {
@@ -76,6 +87,24 @@ class MatchSpec extends WordSpec with MustMatchers {
       }
     }
 
+    "Player1 wins after a Deuce" should {
+
+      "return 0-0, Deuce" in {
+        val aMatch = Match(player1, player2, printer)
+
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player1)
+
+        aMatch.score() mustBe "1-0"
+      }
+    }
+
     "Player1 scores 4 points and Player2 scores 3 points" should {
 
       "return 0-0, Advantage Player 2" in {
@@ -90,6 +119,24 @@ class MatchSpec extends WordSpec with MustMatchers {
         aMatch.pointWonBy(player2)
 
         aMatch.score() mustBe "0-0, Advantage " + player2
+      }
+    }
+
+    "Player2 wins after an Advantage" should {
+
+      "return 0-0, Deuce" in {
+        val aMatch = Match(player1, player2, printer)
+
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player1)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player2)
+        aMatch.pointWonBy(player2)
+
+        aMatch.score() mustBe "0-1"
       }
     }
 
