@@ -1,5 +1,6 @@
 package domain
 
+import domain.TypeAlias.Player
 import domain.games.{NormalGame, TieBreak}
 
 case class Formatter() {

@@ -1,5 +1,6 @@
 package domain
 
+import domain.TypeAlias.Player
 import domain.games.{Game, NormalGame, TieBreak}
 
 import scala.collection.mutable.ListBuffer

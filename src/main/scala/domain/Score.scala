@@ -1,5 +1,7 @@
 package domain
 
+import domain.TypeAlias.Player
+
 case class Score(
                   private val player1: Player,
                   private val player2: Player,

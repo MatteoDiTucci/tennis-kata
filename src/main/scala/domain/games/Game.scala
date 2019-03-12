@@ -1,6 +1,7 @@
 package domain.games
 
-import domain.{Player, Score}
+import domain.TypeAlias.Player
+import domain.Score
 
 sealed abstract class Game(private val player1: Player, private val player2: Player) {
   protected var score = Score(player1, player2, 0, 0)
@@ -16,7 +17,7 @@ sealed abstract class Game(private val player1: Player, private val player2: Pla
   }
 
   def leadingPlayerName(): String =
-    score.leader().name
+    score.leader()
 
 }
 
