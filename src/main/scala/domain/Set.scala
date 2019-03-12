@@ -8,6 +8,8 @@ case class Set(private val player1: Player, private val player2: Player) {
 
   private val games: ListBuffer[Game] = ListBuffer()
 
+  private val GAMES_BEFORE_TIE_BREAK = 6
+
   def pointWonBy(player: Player): Unit = {
     if (games.isEmpty || hasCurrentGameEnded) {
       createNewGame(player)
@@ -35,12 +37,17 @@ case class Set(private val player1: Player, private val player2: Player) {
   }
 
   private def createNewGame(player: Player): Unit = {
-    if (gamesWonByPlayer(player1) == 6 && gamesWonByPlayer(player2) == 6) {
+    if (bothPlayerWon6Games) {
       games += new TieBreak(player1, player2)
       return
     }
 
     games += new NormalGame(player1, player2)
+  }
+
+  private def bothPlayerWon6Games = {
+    gamesWonByPlayer(player1) == GAMES_BEFORE_TIE_BREAK &&
+      gamesWonByPlayer(player2) == GAMES_BEFORE_TIE_BREAK
   }
 
   private def addPointInCurrentGame(player: Player): Unit = {
