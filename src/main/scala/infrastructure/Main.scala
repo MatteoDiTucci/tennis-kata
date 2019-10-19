@@ -1,4 +1,6 @@
-import domain.{Match, Formatter}
+package infrastructure
+
+import domain.Match
 
 object Main {
 

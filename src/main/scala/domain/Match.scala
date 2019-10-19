@@ -1,5 +1,7 @@
 package domain
 
+import infrastructure.Formatter
+
 case class Match(private val player1: String, private val player2: String, private val formatter: Formatter) {
 
   private val set = Set(player1, player2)

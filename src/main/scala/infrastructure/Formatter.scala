@@ -1,5 +1,6 @@
-package domain
+package infrastructure
 
+import domain.Set
 import domain.TypeAlias.Player
 import domain.games.{NormalGame, TieBreak}
 

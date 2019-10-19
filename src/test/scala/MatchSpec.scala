@@ -1,4 +1,5 @@
-import domain.{Match, Formatter}
+import domain.Match
+import infrastructure.Formatter
 import org.scalatest.{MustMatchers, WordSpec}
 
 class MatchSpec extends WordSpec with MustMatchers {
